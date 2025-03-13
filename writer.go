@@ -114,7 +114,7 @@ func (w *Writer) Write(data []byte) (int, error) {
 }
 
 // Close corrects the filesize information in the header
-func (w *Writer) Close(closeOutput bool) error {
+func (w *Writer) Close(closeOutput ...bool) error {
 	if err := w.sampleBuf.Flush(); err != nil {
 		return err
 	}
@@ -147,7 +147,7 @@ func (w *Writer) Close(closeOutput bool) error {
 	if err != nil {
 		return err
 	}
-	if closeOutput {
+	if len(closeOutput) > 0 && closeOutput[0] == true {
 		return w.output.Close()
 	}
 	return nil	
