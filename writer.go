@@ -142,7 +142,8 @@ func (w *Writer) Close() error {
 	}
 
 	// write chunk size
-	err = binary.Write(w.output, binary.LittleEndian, int32(w.bytesWritten))
+	dataSize := w.bytesWritten - 44 // fix extra 28 bytes
+	err = binary.Write(w.output, binary.LittleEndian, int32(dataSize))
 	if err != nil {
 		return err
 	}
